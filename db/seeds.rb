@@ -15,6 +15,10 @@ questions = Question.create([
                                 {text: 'Question?', question_type: 2,
                                  question_options_attributes: [
                                      {text: 'option 1'}, {text: 'option 2'}
+                                 ]},
+                                {text: 'Queston 3', question_type:4,
+                                 question_options_attributes: [
+                                     {text: 'option 1'}, {text: 'option 2'}
                                  ]}
                             ])
 
