@@ -17,6 +17,10 @@ class SurveysController < ApplicationController
 
   # POST /surveys
   def create
+    p"/" *10
+    p survey_params
+    p"/" *10
+
     @survey = Survey.new(survey_params)
 
     if @survey.save
@@ -50,6 +54,18 @@ class SurveysController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def survey_params
-      params.fetch(:survey, {})
+      sp = params.require(:survey).permit(:name, questions: [
+          :text,:type,
+          options: [
+              :text
+          ]
+      ])
+
+      sp[:questions_attributes] = sp.delete :questions
+      sp[:questions_attributes].each do |ssp|
+        ssp[:question_type] = ssp.delete :type
+        ssp[:question_options_attributes] = ssp.delete :options
+      end
+      sp.permit!
     end
 end
