@@ -64,7 +64,11 @@ class SurveysController < ApplicationController
       sp[:questions_attributes] = sp.delete :questions
       sp[:questions_attributes].each do |ssp|
         ssp[:question_type] = ssp.delete :type
-        ssp[:question_options_attributes] = ssp.delete :options
+        if ssp[:options].present?
+          ssp[:question_options_attributes] = ssp.delete :options
+        else
+          ssp[:question_options_attributes] = []
+        end
       end
       sp.permit!
     end
